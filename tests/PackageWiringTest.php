@@ -14,22 +14,24 @@ use PHPUnit\Framework\Attributes\Test;
 class PackageWiringTest extends TestCase
 {
     /**
-     * The host classes this package is ALLOWED to import — the documented
-     * limitation from docs/AI_PACKAGES.md in executable form. May only SHRINK.
+     * The host classes this package is allowed to import: none.
+     *
+     * This list used to name nine `App\Models\*` classes, recording the
+     * documented limitation that ai-webinars operated directly on the consuming
+     * app's webinar models. The drop-in refactor put every one of them behind
+     * `ModelRegistry` and the contracts in ai-core, and the measured count is
+     * now zero.
+     *
+     * Kept as an exact assertion rather than deleted. A ceiling that no longer
+     * binds is not a weaker gate, it is no gate: at nine it would keep passing
+     * if all nine imports came back. At zero, any host import fails this test.
+     *
+     * If one is genuinely needed, the answer is a contract in
+     * `ai-core/src/Contracts/`, not an entry added here.
      *
      * @var list<string>
      */
-    private const ALLOWED_HOST_IMPORTS = [
-        'App\Models\ContentArchetype',
-        'App\Models\TranslationLock',
-        'App\Models\User',
-        'App\Models\Webinar',
-        'App\Models\WebinarPart',
-        'App\Models\WebinarPartElement',
-        'App\Models\WebinarPartElementTranslation',
-        'App\Models\WebinarPartTranslation',
-        'App\Models\WebinarTranslation',
-    ];
+    private const ALLOWED_HOST_IMPORTS = [];
 
     #[Test]
     public function the_package_boots_standalone(): void
