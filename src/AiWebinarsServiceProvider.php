@@ -31,35 +31,35 @@ class AiWebinarsServiceProvider extends ServiceProvider
      * level is rewritten independently — a part element is not reachable
      * through its webinar's prompt.
      */
-    public function register(): void
+    public function boot(): void
     {
-        $this->app->resolving(PromptKeyRegistry::class, static function (PromptKeyRegistry $registry): void {
-            $registry->registerMany([
-                'webinar_rewrite_system' => [
-                    'label' => 'Webinar Content Rewrite System Prompt',
-                    'template' => 'rewrite.field_rewrite',
-                ],
-                'webinar_part_rewrite_system' => [
-                    'label' => 'Webinar Part Content Rewrite System Prompt',
-                    'template' => 'rewrite.field_rewrite',
-                ],
-                'webinar_part_element_rewrite_system' => [
-                    'label' => 'Webinar Part Element Content Rewrite System Prompt',
-                    'template' => 'rewrite.field_rewrite',
-                ],
-                'webinar_seo_system' => [
-                    'label' => 'Webinar SEO Generation System Prompt',
-                    'template' => 'rewrite.seo_field',
-                ],
-                'webinar_part_seo_system' => [
-                    'label' => 'Webinar Part SEO Generation System Prompt',
-                    'template' => 'rewrite.seo_field',
-                ],
-                'webinar_part_element_seo_system' => [
-                    'label' => 'Webinar Part Element SEO Generation System Prompt',
-                    'template' => 'rewrite.seo_field',
-                ],
-            ]);
-        });
+        $registry = $this->app->make(PromptKeyRegistry::class);
+
+        $registry->registerMany([
+            'webinar_rewrite_system' => [
+                'label' => 'Webinar Content Rewrite System Prompt',
+                'template' => 'rewrite.field_rewrite',
+            ],
+            'webinar_part_rewrite_system' => [
+                'label' => 'Webinar Part Content Rewrite System Prompt',
+                'template' => 'rewrite.field_rewrite',
+            ],
+            'webinar_part_element_rewrite_system' => [
+                'label' => 'Webinar Part Element Content Rewrite System Prompt',
+                'template' => 'rewrite.field_rewrite',
+            ],
+            'webinar_seo_system' => [
+                'label' => 'Webinar SEO Generation System Prompt',
+                'template' => 'rewrite.seo_field',
+            ],
+            'webinar_part_seo_system' => [
+                'label' => 'Webinar Part SEO Generation System Prompt',
+                'template' => 'rewrite.seo_field',
+            ],
+            'webinar_part_element_seo_system' => [
+                'label' => 'Webinar Part Element SEO Generation System Prompt',
+                'template' => 'rewrite.seo_field',
+            ],
+        ]);
     }
 }
