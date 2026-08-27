@@ -339,18 +339,33 @@ class WebinarContentRewriteService extends AbstractContentRewriteService
     }
 
     /**
-     * Resolve the content archetype for a webinar.
+     * Resolve the content archetype for a webinar, or null when the host model
+     * does not carry one.
      *
-     * Uses the HasContentArchetype trait's resolution:
-     * 1. Direct assignment on the webinar
-     * 2. System default for Webinar type
+     * `resolveContentArchetype()` comes from the host's `HasContentArchetype`
+     * trait, which this package cannot see: there is no package-visible
+     * contract for it, so the call has to be dynamic. That makes it OPTIONAL —
+     * a consuming app is free to have a Webinar model without the trait, and
+     * archetypes are an enhancement, not a requirement.
+     *
+     * This used to call the method unconditionally, with a phpstan ignore for
+     * `method.notFound` suppressing the warning — which is exactly the bug the
+     * ignore was hiding: on a host model without the trait the result is a
+     * fatal "Call to undefined method", not a missing archetype. The two
+     * equivalent
+     * methods in ai-products already guard this way
+     * (`ProductContentRewriteService::resolveArchetype()` and its
+     * category counterpart); ai-webinars was the odd one out.
      */
     protected function resolveArchetype(Model $model): ?Model
     {
-        $webinar = $model;
+        if (!method_exists($model, 'resolveContentArchetype')) {
+            return null;
+        }
 
-        /** @phpstan-ignore method.notFound */
-        return $webinar->resolveContentArchetype();
+        $archetype = $model->resolveContentArchetype();
+
+        return $archetype instanceof Model ? $archetype : null;
     }
 
     // ═══════════════════════════════════════════════════════════════════════
