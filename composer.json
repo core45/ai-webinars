@@ -1,0 +1,40 @@
+{
+    "name": "core45/ai-webinars",
+    "description": "Webinar AI content services: webinar/part/part-element rewrite services and translation jobs.",
+    "type": "library",
+    "version": "0.1.0",
+    "license": "MIT",
+    "require": {
+        "php": "^8.4",
+        "astrotomic/laravel-translatable": "^11.17",
+        "core45/ai-core": "^0.1",
+        "filament/notifications": "^5.7",
+        "laravel/framework": "^13.0",
+        "ramsey/uuid": "^4.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Core45\\AiWebinars\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Core45\\AiWebinars\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^11.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Core45\\AiWebinars\\AiWebinarsServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
