@@ -2,7 +2,6 @@
     "name": "core45/ai-webinars",
     "description": "Webinar AI content services: webinar/part/part-element rewrite services and translation jobs.",
     "type": "library",
-    "version": "0.1.0",
     "license": "MIT",
     "repositories": [
         {
